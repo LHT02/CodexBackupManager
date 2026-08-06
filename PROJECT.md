@@ -71,6 +71,7 @@
 - 公共仓库已创建并推送：`https://github.com/LHT02/CodexBackupManager`；默认分支为 `main`，首次源码提交为 `a665d135f30706ee655534243afc7db8e82107ab`。
 - 仓库已启用 Issues、Discussions 和 Private vulnerability reporting，关闭 Wiki，并配置 `codex`、`backup`、`restore`、`migration`、`electron`、`windows`、`typescript`、`mui` Topics。
 - 首个公开版本：`https://github.com/LHT02/CodexBackupManager/releases/tag/v1.0.0`，附件使用已验证的便携 EXE 与既有 SHA-256。
+- GitHub Actions 固定使用 `windows-2022` Runner，避免 `windows-latest` 镜像在代码步骤开始前反复卡在远端“Set up job”。
 
 ### 2026-08-07 实现记录
 
