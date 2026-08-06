@@ -68,6 +68,9 @@
 - `.gitignore` 明确排除 Node 依赖、构建输出、工作目录、`.cxbak`、凭据/证书和环境文件。
 - `.gitattributes` 统一源码为 LF，并将 EXE、ICO、PNG、CXBAK 标记为二进制，保持跨平台检出一致。
 - 发布前敏感模式扫描未发现 Token、API Key、真实 `auth.json` 或 `.codex` 用户数据。
+- 公共仓库已创建并推送：`https://github.com/LHT02/CodexBackupManager`；默认分支为 `main`，首次源码提交为 `a665d135f30706ee655534243afc7db8e82107ab`。
+- 仓库已启用 Issues、Discussions 和 Private vulnerability reporting，关闭 Wiki，并配置 `codex`、`backup`、`restore`、`migration`、`electron`、`windows`、`typescript`、`mui` Topics。
+- 首个公开版本：`https://github.com/LHT02/CodexBackupManager/releases/tag/v1.0.0`，附件使用已验证的便携 EXE 与既有 SHA-256。
 
 ### 2026-08-07 实现记录
 
