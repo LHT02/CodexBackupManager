@@ -51,7 +51,6 @@
   },
   "devDependencies": {
     "@material-symbols/svg-400": "0.45.10",
-    "@rolldown/binding-win32-x64-msvc": "^1.2.3",
     "@types/node": "24.10.10",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
@@ -66,6 +65,9 @@
     "typescript": "5.9.3",
     "vite": "8.2.1",
     "wait-on": "9.0.4"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-win32-x64-msvc": "1.2.3"
   },
   "build": {
     "appId": "com.lht02.codexbackupmanager",

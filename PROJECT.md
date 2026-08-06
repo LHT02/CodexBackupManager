@@ -64,7 +64,7 @@
 - 目标公开仓库：`https://github.com/LHT02/CodexBackupManager`，默认分支 `main`，许可证 MIT。
 - `package.json` 已补充 repository、homepage、issues、keywords 与 Node.js 版本要求。
 - README 已加入 CI、Release、许可证徽章和公开下载入口。
-- 新增 `CONTRIBUTING.md`、`SECURITY.md` 与 Windows GitHub Actions CI。
+- 新增 `CONTRIBUTING.md`、`SECURITY.md` 与 GitHub Actions CI。
 - `.gitignore` 明确排除 Node 依赖、构建输出、工作目录、`.cxbak`、凭据/证书和环境文件。
 - `.gitattributes` 统一源码为 LF，并将 EXE、ICO、PNG、CXBAK 标记为二进制，保持跨平台检出一致。
 - 发布前敏感模式扫描未发现 Token、API Key、真实 `auth.json` 或 `.codex` 用户数据。
@@ -72,6 +72,7 @@
 - 仓库已启用 Issues、Discussions 和 Private vulnerability reporting，关闭 Wiki，并配置 `codex`、`backup`、`restore`、`migration`、`electron`、`windows`、`typescript`、`mui` Topics。
 - 首个公开版本：`https://github.com/LHT02/CodexBackupManager/releases/tag/v1.0.0`，附件使用已验证的便携 EXE 与既有 SHA-256。
 - GitHub Actions 使用 `ubuntu-latest` 执行跨平台的 TypeScript、单元测试和 Vite 构建检查；Windows 便携版另由本机启动、打包和 GitHub 回下载哈希校验覆盖。
+- Windows 专用的 Rolldown 原生绑定声明为 `optionalDependencies`，保留 Windows 本地构建能力，同时避免 Linux CI 因平台不匹配中断安装。
 
 ### 2026-08-07 实现记录
 
