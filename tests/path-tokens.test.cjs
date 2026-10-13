@@ -3,11 +3,12 @@ const path = require('node:path');
 const test = require('node:test');
 const { tokenizePath, resolveTokenPath } = require('../electron/services/path-tokens.cjs');
 
+const sourceRoot = path.resolve('test-fixtures', 'Source');
 const environment = {
-  USERPROFILE: path.resolve('D:\\Users\\Source'),
-  APPDATA: path.resolve('D:\\Users\\Source\\AppData\\Roaming'),
-  LOCALAPPDATA: path.resolve('D:\\Users\\Source\\AppData\\Local'),
-  CODEX_HOME: path.resolve('D:\\PortableCodex'),
+  USERPROFILE: sourceRoot,
+  APPDATA: path.join(sourceRoot, 'AppData', 'Roaming'),
+  LOCALAPPDATA: path.join(sourceRoot, 'AppData', 'Local'),
+  CODEX_HOME: path.resolve('test-fixtures', 'PortableCodex'),
 };
 
 test('tokenizes the most specific known root and resolves on another user', () => {
@@ -15,11 +16,12 @@ test('tokenizes the most specific known root and resolves on another user', () =
   const token = tokenizePath(source, environment);
   assert.equal(token, '%CODEX_HOME%/skills/demo/SKILL.md');
 
+  const restoredCodexHome = path.resolve('test-fixtures', 'RestoredCodex');
   const destination = resolveTokenPath(token, {
     ...environment,
-    CODEX_HOME: path.resolve('E:\\RestoredCodex'),
+    CODEX_HOME: restoredCodexHome,
   });
-  assert.equal(destination, path.resolve('E:\\RestoredCodex\\skills\\demo\\SKILL.md'));
+  assert.equal(destination, path.join(restoredCodexHome, 'skills', 'demo', 'SKILL.md'));
 });
 
 test('rejects path traversal and unknown tokens', () => {
