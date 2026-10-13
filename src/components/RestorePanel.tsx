@@ -217,6 +217,13 @@ export function RestorePanel({ busy, onBusyChange, onNotify }: Props) {
         <Alert severity="success" icon={<MaterialSymbol name="task_alt" />}>
           <Typography variant="subtitle2">已还原 {result.restoredFiles.toLocaleString()} 个文件（{formatBytes(result.restoredBytes)}）</Typography>
           <Typography variant="body2">跳过 {result.skipped.length.toLocaleString()} 个本机较新文件。</Typography>
+          {result.pathMigration && result.pathMigration.replacements > 0 && (
+            <Typography variant="body2">
+              已将 {result.pathMigration.replacements.toLocaleString()} 处旧用户路径迁移到当前用户
+              （{result.pathMigration.files.toLocaleString()} 个文本文件、
+              {result.pathMigration.databases.toLocaleString()} 个数据库）。
+            </Typography>
+          )}
           {result.rollback && (
             <Button size="small" sx={{ mt: 0.5 }} onClick={() => window.codexBackup.showItem(result.rollback!.destination)}>
               查看自动回滚包

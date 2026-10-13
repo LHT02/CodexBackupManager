@@ -32,8 +32,23 @@ const COMPONENTS = [
     icon: 'forum',
     recommended: true,
     locations: [
-      { token: 'CODEX_HOME', names: ['sessions', 'sqlite', 'session_index.jsonl', 'history.jsonl'] },
-      { token: 'CODEX_HOME', topLevelPattern: /^(state|goals)_\d+\.sqlite(?:-(?:shm|wal))?$/i },
+      {
+        token: 'CODEX_HOME',
+        names: [
+          'sessions',
+          'archived_sessions',
+          'rollout-migrations',
+          'automations',
+          'project-metadata-locks',
+          'sqlite',
+          'session_index.jsonl',
+          'history.jsonl',
+        ],
+      },
+      {
+        token: 'CODEX_HOME',
+        topLevelPattern: /^(?:state|goals|queue|thread_history)_\d+\.sqlite(?:-(?:shm|wal))?$/i,
+      },
     ],
   },
   {

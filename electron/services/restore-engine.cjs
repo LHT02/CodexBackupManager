@@ -8,6 +8,7 @@ const { prepareReadableArchive, openAndReadManifest } = require('./archive-forma
 const { createRollbackBackup } = require('./backup-engine.cjs');
 const { atomicReplace, pathExists } = require('./file-utils.cjs');
 const { getPathEnvironment, resolveTokenPath, tokenizePath } = require('./path-tokens.cjs');
+const { migrateRestoredPathReferences } = require('./path-migration.cjs');
 
 function createHashingTransform() {
   const hash = crypto.createHash('sha256');
@@ -94,6 +95,7 @@ async function restoreBackup(options) {
         password: options.password,
         appVersion: options.appVersion,
         userProfile: pathEnvironment.USERPROFILE,
+        pathEnvironment,
         rollbackDirectory: options.rollbackDirectory,
         signal: options.signal,
         onProgress: (progress) => options.onProgress?.({
@@ -146,10 +148,18 @@ async function restoreBackup(options) {
       });
     }
 
+    const pathMigration = await migrateRestoredPathReferences(
+      plan.actions,
+      manifest,
+      pathEnvironment,
+      { signal: options.signal, onProgress: options.onProgress },
+    );
+
     return {
       restoredFiles,
       restoredBytes,
       skipped: plan.skipped,
+      pathMigration,
       rollback: rollback
         ? {
             destination: rollback.destination,

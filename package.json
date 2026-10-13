@@ -1,6 +1,6 @@
 {
   "name": "codex-backup-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Codex configuration, session, skill and desktop data backup and restore utility",
   "type": "module",
   "main": "electron/main.cjs",

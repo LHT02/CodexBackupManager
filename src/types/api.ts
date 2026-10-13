@@ -65,6 +65,13 @@ export type RestoreResult = {
   restoredFiles: number;
   restoredBytes: number;
   skipped: Array<{ targetPath: string; reason: string }>;
+  pathMigration?: {
+    files: number;
+    databases: number;
+    rows: number;
+    replacements: number;
+    inferred: boolean;
+  };
   rollback: null | { destination: string; outputBytes: number; outputSha256: string };
   message?: string;
 };

@@ -38,6 +38,21 @@
 
 ## 验证与产物
 
+### 2026-10-13 跨用户迁移修复（v1.0.1）
+
+- 根因：1.0.0 只对备份文件的落盘位置进行路径令牌化，未改写文件内部的绝对路径；会话清单也未包含 `archived_sessions` 和新版线程历史/队列数据库。
+- 备份清单新增源 `%USERPROFILE%`、`%APPDATA%`、`%LOCALAPPDATA%` 和 `%CODEX_HOME%` 路径环境，用于确定性跨用户映射。
+- 还原后会对 `config.toml`、`.codex-global-state.json`、其备份、会话索引/历史等顶层状态文件执行大小写不敏感的路径改写，JSON/JSONL 改写后重新解析验证。
+- SQLite 使用字段白名单迁移：`state_*.sqlite` 的 rollout、cwd、project root、sandbox writable root、agent/attachment 路径，以及 `sqlite/codex-dev.db` 的会话 cwd、自动化 cwds 和本地环境配置路径；修改后执行 `PRAGMA quick_check` 和 WAL checkpoint。
+- 会话范围补充 `archived_sessions`、`rollout-migrations`、`automations`、`project-metadata-locks`、`queue_*.sqlite` 和 `thread_history_*.sqlite`，避免归档对话出现 `missing source rollout`。
+- 兼容 1.0.0 旧备份：当清单没有源路径元数据时，从受管文本文件与 SQLite 路径字段中统计并推断旧 Windows 用户目录。
+- 新增 3 项跨用户回归测试：Windows 大小写/JSON 转义路径，归档 rollout + 两个 SQLite 数据库的端到端迁移，以及旧备份源用户名推断。
+- `npm run check`：TypeScript 通过，7/7 Node 测试通过，Vite 生产构建通过；Linux/x64 `npm ci --dry-run` 通过。
+- `npm run smoke:electron` 和 `npm run smoke:packaged` 均通过，主题、原生窗口背景、自绘标题栏、滚动条和 Material Symbols Sharp 无回归。
+- 从打包后 `app.asar` 直接运行跨用户备份/还原：3 个文件成功还原，1 个文本文件和 1 个 SQLite 数据库共 5 处路径迁移，归档 rollout 存在且内容一致。
+- `Codex-Backup-Manager-1.0.1-Portable.exe` 直接启动成功，产生标题为“Codex 备份管家”的可响应主窗口。
+- v1.0.1 便携 EXE：113,338,252 字节；SHA-256 `DCA59AD4B963C2A2BEFC462BE6643F5521EF337F43C204956CD2B09BCF864B96`；Authenticode 未签名。
+
 ### 2026-08-07 最终验证
 
 - 当前机器完整扫描：10 个组件类别，29,384 个文件，7,967,502,320 字节（约 7.42 GiB）；1 个正在占用或不可访问的插件项目被明确报告并跳过。

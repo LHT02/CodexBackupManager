@@ -65,6 +65,7 @@ async function createArchiveFromFiles(files, options) {
         arch: process.arch,
         hostname: os.hostname(),
         release: os.release(),
+        pathEnvironment: options.sourcePathEnvironment,
       },
       components: componentIds.map((id) => {
         const definition = COMPONENT_MAP.get(id);
@@ -138,6 +139,7 @@ async function createBackup(options) {
     ...options,
     backupType: 'user',
     warnings: scan.warnings,
+    sourcePathEnvironment: scan.pathEnvironment,
   });
 }
 
@@ -157,6 +159,7 @@ async function createRollbackBackup(files, options = {}) {
     appVersion: options.appVersion,
     backupType: 'rollback',
     notes: '由还原操作自动生成，可用于撤销覆盖。',
+    sourcePathEnvironment: options.pathEnvironment,
     signal: options.signal,
     onProgress: options.onProgress,
   });
